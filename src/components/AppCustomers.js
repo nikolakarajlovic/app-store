@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import LatestPurchases from '../pages/LatestPurchases';
 
 function AppCustomers() {
 
@@ -43,7 +45,7 @@ function AppCustomers() {
         setCustomers([...customers.slice(0, index), ...customers.slice(index + 1)])
       }
 
-    return (<div>
+    return (<Router><div>
         <div>
       <h3>New Customer</h3>
       <form className="form" onSubmit={addCustomer}>
@@ -68,11 +70,18 @@ function AppCustomers() {
             <td>{customer.firstName}</td>
             <td>{customer.lastName}</td>
             <td><button onClick={() => handleRemoveCustomer(index)}>Remove</button></td>
+            <td><Link to="/customers/:id">Latest Purchases</Link></td>
           </tr>
         ))}
       </tbody>
     </table>
-    </div>)
-      }
+    <Route path="/customers/:id">
+            <LatestPurchases />
+          </Route>
+    </div>
+    </Router>
+    );
+}
+      
     
       export default AppCustomers;
